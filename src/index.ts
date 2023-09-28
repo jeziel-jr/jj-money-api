@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 import cors from 'cors'
 import express, { NextFunction, Request, Response } from 'express'
 import moment from 'moment'
@@ -72,8 +72,7 @@ router.get(
 )
 
 router.post('/transactions', async (req: Request, res: Response) => {
-  const { description, price, category, type, date } =
-    req.body as Prisma.TransactionCreateInput
+  const { description, price, category, type, date } = req.body
   console.log(date)
 
   const transaction = await prisma.transaction.create({
