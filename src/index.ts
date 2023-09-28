@@ -6,12 +6,7 @@ import { z } from 'zod'
 
 const app = express()
 app.use(express.json())
-app.use(
-  cors({
-    origin: '*',
-    allowedHeaders: ['Content-Type', 'Authorization'],
-  }),
-)
+app.use(cors())
 
 const prisma = new PrismaClient()
 
@@ -98,6 +93,6 @@ router.delete('/transactions/:id', async (req: Request, res: Response) => {
 
 app.use(router)
 
-app.listen(3000, () => {
-  console.log('Server is running on port 3000')
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`Server is running on port ${process.env.PORT || 3000}`)
 })
