@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  backend:
+    container_name: dt_money_api
+    networks:
+      - dt-money-connect
+    build: .
+    restart: on-failure
+    tty: true
+    stdin_open: true
+    ports:
+      - 3000:3000
+    entrypoint: ["sh", "-c", "npm i && npm run dev"]
+    env_file:
+      - .env
+    working_dir: /home/node/app
+    volumes:
+      - ./:/home/node/app
+
+  mysql:
+    image: mysql:8.0.28
+    platform: linux/x86_64
+    container_name: dt_money_database
+    restart: on-failure
+    environment:
+      - MYSQL_DATABASE=dtmoney
+      - MYSQL_ROOT_PASSWORD=DA39A3EE5E6B4B0D3255BFEF95601890AFD80709
+    ports:
+      - 3306:3306
+    networks:
+      - dt-money-connect
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 2s
+      retries: 10
+
+networks:
+  dt-money-connect:
+    driver: bridge

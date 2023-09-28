@@ -1,0 +1,24 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model Transaction {
+    id          String          @id @default(uuid())
+    description String
+    price       Float
+    category    String
+    type        TransactionType
+    createdAt   DateTime        @default(now())
+    deletedAt   DateTime?
+    date        DateTime
+}
+
+enum TransactionType {
+    income
+    outcome
+}
