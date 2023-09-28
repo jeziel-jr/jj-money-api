@@ -88,7 +88,7 @@ router.delete('/transactions/:id', async (req: Request, res: Response) => {
       id,
     },
   })
-  res.status(204)
+  res.status(204).end()
 })
 
 app.use(router)
