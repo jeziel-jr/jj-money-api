@@ -6,7 +6,12 @@ import { z } from 'zod'
 
 const app = express()
 app.use(express.json())
-app.use(cors())
+app.use(
+  cors({
+    origin: '*',
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  }),
+)
 
 const prisma = new PrismaClient()
 
